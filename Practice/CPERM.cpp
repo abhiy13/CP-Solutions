@@ -14,6 +14,20 @@
 #define pii pair <int,int>
 #define pll pair <ll,ll> 
  
+#define MOD 1000000007
+ 
+ll power(ll n , ll p){
+	ll ans = 1;
+	n %= MOD;
+	for(;p;p>>=1){
+		if(p&1){
+			ans = (ans*n)%MOD;
+		}
+		n = (n*n)%MOD;
+	}
+	return ans;
+}
+ 
 int main(){
 	ios::sync_with_stdio(false);
 	#ifdef ABHI
@@ -24,18 +38,8 @@ int main(){
 	while(T--){
 		ll n;
 		cin>>n;
-		ll ar[n][n];
-		FOR(i,n) FOR(j,i+1) cin>>ar[i][j];
-		for(int i = n - 1 ; i > 0 ; i--){
-			for(int j = 0 ; j < i ; j++){
-				if(ar[i][j] > ar[i][j+1]){
-					ar[i-1][j] += ar[i][j];
-				}else{
-					ar[i-1][j] += ar[i][j+1];
-				}
-			}
-		}	
-		cout<<ar[0][0]<<endl;
+		if(n==1) cout<<0<<endl;
+		else cout<<power(2,n-1)-2<<endl;	
 	}
 	#ifdef ABHI
 		cerr<<"Time Elapsed "<<(double)clock()/CLOCKS_PER_SEC <<" s\n";
