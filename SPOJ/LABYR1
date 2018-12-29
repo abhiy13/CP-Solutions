@@ -1,0 +1,89 @@
+#include "bits/stdc++.h"
+	using namespace std;
+ 
+ 
+#define PB(x) push_back(x)
+#define EB(x) emplace_back(x)
+#define F first
+#define S second
+#define FOR(i,n) for(int i = 0 ; i < n ; i++)
+#define FORR(i,a,b) for(ll i = (ll)a ; i < (ll)b ; i++)
+#define RFOR(i,a,b) for(ll i = (ll)a ; i > (ll)b ; i--)
+#define ll long long
+#define llu unsigned long long
+#define pii pair <int,int>
+#define pll pair <int,int> 
+#define vi vector <int>
+ 
+#define N 1010
+char ar[N][N];
+bool visited[N][N]; 
+int n , m;
+ 
+const int inf = 1e6;
+ 
+bool safe(ll i , ll j){
+	if(i >= n or j >= m or i < 0 or j < 0 or ar[i][j] != '.') return false;
+	return true;
+}
+ 
+int dx[] = {1 , 0 , -1 , 0};
+int dy[] = {0 , 1 , 0 , -1};
+ 
+ll best = 0;
+ 
+struct node{
+	ll i , j;
+}nxt;
+ 
+void dfs(int i , int j , int d){
+	if(!safe(i,j)) return;
+	ar[i][j] = 'v';
+	dfs(i+1,j,d+1);
+	dfs(i,j+1,d+1);
+	dfs(i-1,j,d+1);
+	dfs(i,j-1,d+1);
+	ar[i][j] = '.';
+	if(d > best){
+		best = d;
+		nxt. i = i , nxt.j = j;	
+	}
+}	
+ 
+ll find(){
+	ll maxlen = 0;
+	if(ar[nxt.i][nxt.j] == '#') return 0;
+	while(true){
+		best = 0;
+		dfs(nxt.i,nxt.j,0);
+		if(best <= maxlen) break;
+		else maxlen = best;
+	}
+	return maxlen;
+}
+ 
+int main(){
+	ios::sync_with_stdio(false);
+	#ifdef ABHI
+		freopen("input.txt" , "r" , stdin);
+	#endif
+	int T;
+	cin>>T;
+	while(T--){
+		cin>>m>>n;
+		memset(ar,'.' , sizeof ar);
+		memset(visited,false,sizeof visited);
+		FOR(i,n) FOR(j,m) cin>>ar[i][j];
+		FOR(i,n) FOR(j,m){
+			if(ar[i][j] == '.' and !visited[i][j]){
+				nxt.i = i , nxt.j = j;
+				break;
+			}
+		}
+		cout<<"Maximum rope length is "<<find()<<"."<<endl;
+	}	
+	#ifdef ABHI
+		cerr<<"Time Elapsed "<<(double)clock()/CLOCKS_PER_SEC <<" s\n";
+	#endif
+	return 0;
+} 
