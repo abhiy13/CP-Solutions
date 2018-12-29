@@ -187,4 +187,3 @@ int main(){
   return 0;
 }
  
-// Note : Submit with C++ CLANG 14 , C++ gcc 14 causes Runtime Error for some reason
