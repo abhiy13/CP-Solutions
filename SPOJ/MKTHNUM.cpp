@@ -3,56 +3,6 @@
 
 using namespace std;
 
-
-string to_string(string s) {
-  return '"' + s + '"';
-}
- 
-string to_string(const char* s) {
-  return to_string((string) s);
-}
- 
-string to_string(bool b) {
-  return (b ? "true" : "false");
-}
- 
-template <typename A, typename B>
-string to_string(pair<A, B> p) {
-  return "(" + to_string(p.first) + ", " + to_string(p.second) + ")";
-}
- 
-template <typename A>
-string to_string(A v) {
-  bool first = true;
-  string res = "{";
-  for (const auto &x : v) {
-    if (!first) {
-      res += ", ";
-    }
-    first = false;
-    res += to_string(x);
-  }
-  res += "}";
-  return res;
-}
- 
-void debug_out() { cerr << endl; }
- 
-template <typename Head, typename... Tail>
-void debug_out(Head H, Tail... T) {
-  cerr << " " << to_string(H);
-  debug_out(T...);
-}
- 
-#ifdef ABHI
-  #define line_debug(x) cerr << "[" << __LINE__ << "]: " << #x << "->" << to_string(x) << '\n';
-  #define debug(...) cerr << "[" << #__VA_ARGS__ << "]:", debug_out(__VA_ARGS__)
-#else
-  #define line_debug(x) 42
-  #define debug(...) 42
-#endif
-
-
 struct Node {
   int x;
   Node* l, *r;
@@ -146,7 +96,6 @@ int main(){
   int l, r, k;
   while(Q--) {
     cin >> l >> r >> k;
-    debug(l, r, k);
     cout << inv[query(versions[r], versions[l - 1], 0, M, k)] << '\n';
   }
   return 0;
